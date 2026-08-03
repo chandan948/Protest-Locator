@@ -1,23 +1,19 @@
 import Navbar from "@/components/layout/Navbar";
 import Hero from "@/components/home/Hero";
-import SearchBar from "@/components/home/SearchBar";
 import StatsCards from "@/components/home/StatsCards";
-import IndiaMap from "@/components/map/IndiaMap";
+import MapDashboard from "@/components/map/MapDashboard";
+import LatestProtests from "@/components/home/LatestProtests";
 
 export default function Home() {
   return (
     <>
       <Navbar />
 
-      <main className="bg-slate-50">
+      <main>
         <Hero />
-
-        <SearchBar />
-
         <StatsCards />
-
-        {/* India Interactive Map */}
-        <IndiaMap />
+        <MapDashboard />
+        <LatestProtests />
       </main>
     </>
   );

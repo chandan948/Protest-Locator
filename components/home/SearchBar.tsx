@@ -1,8 +1,61 @@
 "use client";
 
+import { useState } from "react";
 import { Search } from "lucide-react";
 
+import { protests } from "@/lib/protests";
+import { useMapContext } from "@/context/MapContext";
+
 export default function SearchBar() {
+    const [search, setSearch] = useState("");
+    const [category, setCategory] = useState("All Categories");
+    const [date, setDate] = useState("");
+
+    const {
+        setSelectedProtest,
+        setMapCenter,
+        setMapZoom,
+    } = useMapContext();
+
+    const handleSearch = () => {
+        const query = search.trim().toLowerCase();
+
+        if (!query) return;
+
+        const protest = protests.find((item) => {
+            const matchesText =
+                item.title.toLowerCase().includes(query) ||
+                item.city.toLowerCase().includes(query) ||
+                item.state.toLowerCase().includes(query);
+
+            const matchesCategory =
+                category === "All Categories" ||
+                item.category === category;
+
+            return matchesText && matchesCategory;
+        });
+
+        if (!protest) {
+            alert("No matching protest found.");
+            return;
+        }
+
+        setSelectedProtest(protest);
+
+        setMapCenter([
+            protest.latitude,
+            protest.longitude,
+        ]);
+
+        setMapZoom(12);
+
+        document
+            .getElementById("live-map")
+            ?.scrollIntoView({
+                behavior: "smooth",
+            });
+    };
+
     return (
         <section className="-mt-10 relative z-10 px-4">
             <div className="mx-auto max-w-6xl rounded-2xl border border-gray-200 bg-white p-6 shadow-xl">
@@ -13,6 +66,13 @@ export default function SearchBar() {
                     <input
                         type="text"
                         placeholder="Search city, state or protest..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                handleSearch();
+                            }
+                        }}
                         className="
               h-14
               w-full
@@ -33,6 +93,8 @@ export default function SearchBar() {
                     {/* Date */}
                     <input
                         type="date"
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
                         className="
               h-14
               w-full
@@ -51,6 +113,8 @@ export default function SearchBar() {
 
                     {/* Category */}
                     <select
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
                         className="
               h-14
               w-full
@@ -77,6 +141,7 @@ export default function SearchBar() {
 
                     {/* Button */}
                     <button
+                        onClick={handleSearch}
                         className="
               flex
               h-14

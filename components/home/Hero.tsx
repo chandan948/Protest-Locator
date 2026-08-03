@@ -1,37 +1,98 @@
-import { ArrowRight, MapPinned } from "lucide-react";
+"use client";
+
+import { ArrowRight, MapPinned, Search, ShieldCheck } from "lucide-react";
 
 export default function Hero() {
     return (
-        <section className="bg-gradient-to-br from-blue-50 via-white to-slate-100">
-            <div className="mx-auto flex max-w-7xl flex-col items-center px-6 py-24 text-center">
+        <section className="relative overflow-hidden bg-gradient-to-b from-blue-50 via-white to-white">
+            {/* Background Blur */}
+            <div className="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-blue-300/20 blur-3xl" />
 
-                <div className="mb-6 flex items-center gap-2 rounded-full border bg-white px-4 py-2 shadow-sm">
-                    <MapPinned className="h-5 w-5 text-blue-600" />
-                    <span className="text-sm font-medium text-gray-700">
-                        Real-Time Protest Information Across India
+            <div className="relative mx-auto flex max-w-7xl flex-col items-center px-6 pb-12 pt-24 text-center">
+
+                {/* Badge */}
+                <div className="mb-6 flex items-center gap-2 rounded-full border border-blue-100 bg-white px-4 py-2 shadow-sm">
+                    <ShieldCheck size={16} className="text-blue-600" />
+                    <span className="text-sm font-medium text-slate-700">
+                        Verified Public Protest Information Across India
                     </span>
                 </div>
 
-                <h1 className="max-w-4xl text-5xl font-extrabold leading-tight text-gray-900 md:text-6xl">
-                    Stay Updated with
-                    <span className="text-blue-600"> Public Protests </span>
+                {/* Heading */}
+                <h1 className="max-w-4xl text-5xl font-extrabold leading-tight tracking-tight text-slate-900 md:text-7xl">
+                    Stay Updated with{" "}
+                    <span className="text-blue-600">
+                        Public Protests
+                    </span>
+                    <br />
                     Across India
                 </h1>
 
-                <p className="mt-6 max-w-2xl text-lg leading-8 text-gray-600">
-                    Track active, upcoming, and completed protests with
-                    live updates, verified information, and an interactive map.
+                {/* Subtitle */}
+                <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
+                    Discover live protests, public demonstrations, strikes, and civic
+                    events with verified updates, interactive maps, and real-time
+                    information.
                 </p>
 
-                <div className="mt-10 flex flex-wrap justify-center gap-4">
-                    <button className="rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700">
+                {/* Buttons */}
+                <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+
+                    <button className="flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white shadow-lg transition hover:-translate-y-1 hover:bg-blue-700">
+                        <MapPinned size={20} />
                         View Live Map
                     </button>
 
-                    <button className="flex items-center gap-2 rounded-xl border border-gray-300 bg-white px-6 py-3 font-semibold transition hover:bg-gray-100">
+                    <button className="flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-700 transition hover:border-blue-500 hover:text-blue-600">
                         Learn More
                         <ArrowRight size={18} />
                     </button>
+
+                </div>
+
+                {/* Search */}
+                <div className="mt-14 w-full max-w-5xl rounded-3xl border bg-white p-5 shadow-xl">
+
+                    <div className="grid gap-4 md:grid-cols-4">
+
+                        {/* Search */}
+
+                        <div className="relative md:col-span-2">
+                            <Search
+                                size={20}
+                                className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+                            />
+
+                            <input
+                                type="text"
+                                placeholder="Search city, state, district..."
+                                className="h-14 w-full rounded-xl border border-slate-200 pl-12 pr-4 outline-none transition focus:border-blue-500"
+                            />
+                        </div>
+
+                        {/* Date */}
+
+                        <input
+                            type="date"
+                            className="h-14 rounded-xl border border-slate-200 px-4 outline-none transition focus:border-blue-500"
+                        />
+
+                        {/* Category */}
+
+                        <select className="h-14 rounded-xl border border-slate-200 px-4 outline-none transition focus:border-blue-500">
+                            <option>All Categories</option>
+                            <option>Farmers</option>
+                            <option>Students</option>
+                            <option>Workers</option>
+                            <option>Political</option>
+                        </select>
+
+                    </div>
+
+                    <button className="mt-5 h-14 w-full rounded-xl bg-blue-600 text-lg font-semibold text-white transition hover:bg-blue-700">
+                        Search Protest
+                    </button>
+
                 </div>
 
             </div>

@@ -1,72 +1,95 @@
+"use client";
+
 import {
     AlertTriangle,
     CalendarClock,
     CheckCircle2,
     MapPinned,
+    TrendingUp,
 } from "lucide-react";
 
 const stats = [
     {
         title: "Active Protests",
-        value: "24",
-        icon: AlertTriangle,
+        value: 24,
+        change: "+5 Today",
         color: "text-red-500",
         bg: "bg-red-50",
+        icon: AlertTriangle,
     },
     {
         title: "Upcoming",
-        value: "12",
-        icon: CalendarClock,
+        value: 12,
+        change: "+2 Today",
         color: "text-yellow-500",
         bg: "bg-yellow-50",
+        icon: CalendarClock,
     },
     {
         title: "Completed",
-        value: "153",
-        icon: CheckCircle2,
+        value: 158,
+        change: "+14 This Week",
         color: "text-green-500",
         bg: "bg-green-50",
+        icon: CheckCircle2,
     },
     {
         title: "States Covered",
-        value: "18",
-        icon: MapPinned,
+        value: 18,
+        change: "Growing",
         color: "text-blue-600",
         bg: "bg-blue-50",
+        icon: MapPinned,
     },
 ];
 
 export default function StatsCards() {
     return (
-        <section className="py-20">
+        <section className="bg-slate-50 py-16">
             <div className="mx-auto max-w-7xl px-6">
+
                 <div className="mb-12 text-center">
-                    <h2 className="text-4xl font-bold text-gray-900">
+                    <h2 className="text-4xl font-bold text-slate-900">
                         Live Protest Statistics
                     </h2>
 
-                    <p className="mt-3 text-gray-600">
+                    <p className="mt-3 text-slate-600">
                         Updated in real time across India.
                     </p>
                 </div>
 
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                    {stats.map((stat) => (
-                        <div
-                            key={stat.title}
-                            className="rounded-2xl border bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
-                        >
+
+                    {stats.map((item) => {
+                        const Icon = item.icon;
+
+                        return (
                             <div
-                                className={`mb-5 flex h-14 w-14 items-center justify-center rounded-xl ${stat.bg}`}
+                                key={item.title}
+                                className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
                             >
-                                <stat.icon className={`h-7 w-7 ${stat.color}`} />
+                                <div
+                                    className={`flex h-14 w-14 items-center justify-center rounded-2xl ${item.bg}`}
+                                >
+                                    <Icon className={item.color} size={28} />
+                                </div>
+
+                                <h3 className="mt-6 text-lg font-semibold text-slate-700">
+                                    {item.title}
+                                </h3>
+
+                                <div className="mt-3 text-5xl font-extrabold text-slate-900">
+                                    {item.value}
+                                </div>
+
+                                <div className="mt-4 flex items-center gap-2 text-sm font-medium text-green-600">
+                                    <TrendingUp size={16} />
+                                    {item.change}
+                                </div>
                             </div>
+                        );
+                    })}
 
-                            <h3 className="text-4xl font-bold">{stat.value}</h3>
-
-                            <p className="mt-2 text-gray-500">{stat.title}</p>
-                        </div>
-                    ))}
                 </div>
             </div>
         </section>

@@ -1,16 +1,14 @@
 "use client";
 
-import {
-    MapContainer,
-    TileLayer,
-    Marker,
-    Popup,
-} from "react-leaflet";
-
+import { MapContainer, TileLayer } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-// Fix marker icons
+import { protests } from "@/lib/protests";
+import MapMarker from "./MapMarker";
+import MapController from "./MapController";
+
+// Fix default Leaflet marker icons
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
 L.Icon.Default.mergeOptions({
@@ -27,25 +25,25 @@ export default function LeafletMap() {
         <MapContainer
             center={[22.9734, 78.6569]}
             zoom={5}
-            scrollWheelZoom
-            className="h-[650px] w-full"
+            scrollWheelZoom={true}
+            className="h-[650px] w-full rounded-2xl"
         >
+            {/* OpenStreetMap Tiles */}
             <TileLayer
-                attribution="&copy; OpenStreetMap contributors"
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
-            <Marker position={[28.6139, 77.209]}>
-                <Popup>Delhi Protest</Popup>
-            </Marker>
+            {/* Controls map movement from Context */}
+            <MapController />
 
-            <Marker position={[19.076, 72.8777]}>
-                <Popup>Mumbai Protest</Popup>
-            </Marker>
-
-            <Marker position={[12.9716, 77.5946]}>
-                <Popup>Bengaluru Protest</Popup>
-            </Marker>
+            {/* Protest Markers */}
+            {protests.map((protest) => (
+                <MapMarker
+                    key={protest.id}
+                    protest={protest}
+                />
+            ))}
         </MapContainer>
     );
 }
