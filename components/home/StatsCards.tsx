@@ -7,11 +7,12 @@ import {
     MapPinned,
     TrendingUp,
 } from "lucide-react";
+import { protests } from "@/lib/protests";
 
 const stats = [
     {
         title: "Active Protests",
-        value: 24,
+        value: protests.filter((protest) => protest.status === "Active").length,
         change: "+5 Today",
         color: "text-red-500",
         bg: "bg-red-50",
@@ -19,7 +20,7 @@ const stats = [
     },
     {
         title: "Upcoming",
-        value: 12,
+        value: protests.filter((protest) => protest.status === "Upcoming").length,
         change: "+2 Today",
         color: "text-yellow-500",
         bg: "bg-yellow-50",
@@ -27,7 +28,7 @@ const stats = [
     },
     {
         title: "Completed",
-        value: 158,
+        value: protests.filter((protest) => protest.status === "Completed").length,
         change: "+14 This Week",
         color: "text-green-500",
         bg: "bg-green-50",
@@ -35,7 +36,7 @@ const stats = [
     },
     {
         title: "States Covered",
-        value: 18,
+        value: new Set(protests.map((protest) => protest.state)).size,
         change: "Growing",
         color: "text-blue-600",
         bg: "bg-blue-50",
@@ -66,7 +67,7 @@ export default function StatsCards() {
                         return (
                             <div
                                 key={item.title}
-                                className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                                className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-950/10"
                             >
                                 <div
                                     className={`flex h-14 w-14 items-center justify-center rounded-2xl ${item.bg}`}
