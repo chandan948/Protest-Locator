@@ -9,7 +9,6 @@ import { useMapContext } from "@/context/MapContext";
 export default function SearchBar() {
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("All Categories");
-    const [date, setDate] = useState("");
 
     const {
         setSelectedProtest,
@@ -20,13 +19,16 @@ export default function SearchBar() {
     const handleSearch = () => {
         const query = search.trim().toLowerCase();
 
-        if (!query) return;
+        if (!query) {
+            alert("Please enter a city, state, or protest name.");
+            return;
+        }
 
         const protest = protests.find((item) => {
             const matchesText =
-                item.title.toLowerCase().includes(query) ||
-                item.city.toLowerCase().includes(query) ||
-                item.state.toLowerCase().includes(query);
+                item.title?.toLowerCase().includes(query) ||
+                item.city?.toLowerCase().includes(query) ||
+                item.state?.toLowerCase().includes(query);
 
             const matchesCategory =
                 category === "All Categories" ||
@@ -43,125 +45,130 @@ export default function SearchBar() {
         setSelectedProtest(protest);
 
         setMapCenter([
-            protest.latitude,
-            protest.longitude,
+            Number(protest.latitude),
+            Number(protest.longitude),
         ]);
 
         setMapZoom(12);
 
-        document
-            .getElementById("live-map")
-            ?.scrollIntoView({
-                behavior: "smooth",
-            });
+        setTimeout(() => {
+            document
+                .getElementById("live-map")
+                ?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                });
+        }, 100);
     };
 
     return (
-        <section className="-mt-10 relative z-10 px-4">
-            <div className="mx-auto max-w-6xl rounded-2xl border border-gray-200 bg-white p-6 shadow-xl">
+        <section className="relative z-10 -mt-10 px-4">
+            <div className="mx-auto max-w-6xl rounded-2xl border border-gray-200 bg-white p-5 shadow-lg md:p-6">
 
-                <div className="grid gap-4 md:grid-cols-4">
+                <div className="grid gap-3 md:grid-cols-3">
 
                     {/* Search */}
-                    <input
-                        type="text"
-                        placeholder="Search city, state or protest..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                                handleSearch();
-                            }
-                        }}
-                        className="
-              h-14
-              w-full
-              rounded-xl
-              border
-              border-gray-300
-              bg-white
-              px-4
-              text-gray-900
-              placeholder:text-gray-500
-              focus:border-blue-600
-              focus:ring-2
-              focus:ring-blue-200
-              focus:outline-none
-            "
-                    />
+                    <div className="relative">
+                        <Search
+                            size={20}
+                            className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"
+                        />
 
-                    {/* Date */}
-                    <input
-                        type="date"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                        className="
-              h-14
-              w-full
-              rounded-xl
-              border
-              border-gray-300
-              bg-white
-              px-4
-              text-gray-900
-              focus:border-blue-600
-              focus:ring-2
-              focus:ring-blue-200
-              focus:outline-none
-            "
-                    />
+                        <input
+                            type="text"
+                            placeholder="Search city, state or protest..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    handleSearch();
+                                }
+                            }}
+                            className="
+                                h-14
+                                w-full
+                                rounded-xl
+                                border
+                                border-gray-300
+                                bg-white
+                                pl-11
+                                pr-4
+                                text-[15px]
+                                font-medium
+                                text-gray-900
+                                placeholder:text-gray-500
+                                outline-none
+                                transition
+                                focus:border-blue-600
+                                focus:ring-4
+                                focus:ring-blue-100
+                            "
+                        />
+                    </div>
 
                     {/* Category */}
                     <select
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
                         className="
-              h-14
-              w-full
-              rounded-xl
-              border
-              border-gray-300
-              bg-white
-              px-4
-              text-gray-900
-              focus:border-blue-600
-              focus:ring-2
-              focus:ring-blue-200
-              focus:outline-none
-            "
+                            h-14
+                            w-full
+                            rounded-xl
+                            border
+                            border-gray-300
+                            bg-white
+                            px-4
+                            text-[15px]
+                            font-medium
+                            text-gray-900
+                            outline-none
+                            transition
+                            focus:border-blue-600
+                            focus:ring-4
+                            focus:ring-blue-100
+                        "
                     >
-                        <option>All Categories</option>
-                        <option>Farmers</option>
-                        <option>Students</option>
-                        <option>Workers</option>
-                        <option>Political</option>
-                        <option>Religious</option>
-                        <option>Environmental</option>
+                        <option value="All Categories">
+                            All Categories
+                        </option>
+                        <option value="Farmers">Farmers</option>
+                        <option value="Students">Students</option>
+                        <option value="Workers">Workers</option>
+                        <option value="Political">Political</option>
+                        <option value="Religious">Religious</option>
+                        <option value="Environmental">
+                            Environmental
+                        </option>
                     </select>
 
                     {/* Button */}
                     <button
+                        type="button"
                         onClick={handleSearch}
                         className="
-              flex
-              h-14
-              items-center
-              justify-center
-              gap-2
-              rounded-xl
-              bg-blue-600
-              font-semibold
-              text-white
-              transition
-              hover:bg-blue-700
-            "
+                            flex
+                            h-14
+                            w-full
+                            items-center
+                            justify-center
+                            gap-2
+                            rounded-xl
+                            bg-blue-600
+                            px-6
+                            font-semibold
+                            text-white
+                            shadow-sm
+                            transition
+                            hover:bg-blue-700
+                            hover:shadow-md
+                            active:scale-[0.99]
+                        "
                     >
                         <Search size={20} />
-                        Search
+                        Search Protest
                     </button>
 
                 </div>
-
             </div>
         </section>
     );
