@@ -16,7 +16,7 @@ export default function IndiaMap() {
         <section className="py-20">
             <div className="mx-auto max-w-7xl px-6">
                 <div className="mb-10">
-                    <h2 className="text-4xl font-bold">
+                    <h2 className="text-4xl font-bold text-slate-900">
                         Live Protest Map
                     </h2>
 

@@ -32,7 +32,8 @@ export default function SearchBar() {
                 category === "All Categories" ||
                 item.category === category;
 
-            return matchesText && matchesCategory;
+            const matchesDate = !date || item.startTime.startsWith(date);
+            return matchesText && matchesCategory && matchesDate;
         });
 
         if (!protest) {
@@ -57,12 +58,14 @@ export default function SearchBar() {
     };
 
     return (
-        <section className="-mt-10 relative z-10 px-4">
-            <div className="mx-auto max-w-6xl rounded-2xl border border-gray-200 bg-white p-6 shadow-xl">
+        <section className="relative z-10 px-4">
+            <div className="mx-auto max-w-6xl rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-blue-950/5">
 
                 <div className="grid gap-4 md:grid-cols-4">
 
                     {/* Search */}
+                    <div className="relative md:col-span-2">
+                    <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
                     <input
                         type="text"
                         placeholder="Search city, state or protest..."
@@ -80,15 +83,16 @@ export default function SearchBar() {
               border
               border-gray-300
               bg-white
-              px-4
-              text-gray-900
-              placeholder:text-gray-500
+              pl-12 pr-4
+              text-slate-900
+              placeholder:text-slate-500
               focus:border-blue-600
               focus:ring-2
               focus:ring-blue-200
               focus:outline-none
             "
                     />
+                    </div>
 
                     {/* Date */}
                     <input
@@ -103,7 +107,8 @@ export default function SearchBar() {
               border-gray-300
               bg-white
               px-4
-              text-gray-900
+              text-slate-900
+              [color-scheme:light]
               focus:border-blue-600
               focus:ring-2
               focus:ring-blue-200
@@ -123,7 +128,7 @@ export default function SearchBar() {
               border-gray-300
               bg-white
               px-4
-              text-gray-900
+              text-slate-900
               focus:border-blue-600
               focus:ring-2
               focus:ring-blue-200
@@ -142,7 +147,7 @@ export default function SearchBar() {
                     {/* Button */}
                     <button
                         onClick={handleSearch}
-                        className="
+                        className="md:col-span-4
               flex
               h-14
               items-center
@@ -152,8 +157,9 @@ export default function SearchBar() {
               bg-blue-600
               font-semibold
               text-white
-              transition
-              hover:bg-blue-700
+              transition duration-200
+              hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-lg
+              active:translate-y-0
             "
                     >
                         <Search size={20} />

@@ -18,6 +18,14 @@ type MapContextType = {
 
     mapZoom: number;
     setMapZoom: (zoom: number) => void;
+
+    stateFilter: string;
+    setStateFilter: (state: string) => void;
+    statusFilter: string;
+    setStatusFilter: (status: string) => void;
+    dateFilter: string;
+    setDateFilter: (date: string) => void;
+    resetFilters: () => void;
 };
 
 const MapContext = createContext<MapContextType | undefined>(
@@ -38,6 +46,15 @@ export function MapProvider({
     ]);
 
     const [mapZoom, setMapZoom] = useState(5);
+    const [stateFilter, setStateFilter] = useState("All States");
+    const [statusFilter, setStatusFilter] = useState("All");
+    const [dateFilter, setDateFilter] = useState("");
+
+    const resetFilters = () => {
+        setStateFilter("All States");
+        setStatusFilter("All");
+        setDateFilter("");
+    };
 
     return (
         <MapContext.Provider
@@ -50,6 +67,14 @@ export function MapProvider({
 
                 mapZoom,
                 setMapZoom,
+
+                stateFilter,
+                setStateFilter,
+                statusFilter,
+                setStatusFilter,
+                dateFilter,
+                setDateFilter,
+                resetFilters,
             }}
         >
             {children}

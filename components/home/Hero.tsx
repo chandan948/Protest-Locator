@@ -1,12 +1,11 @@
-"use client";
-
-import { ArrowRight, MapPinned, Search, ShieldCheck } from "lucide-react";
+import { ArrowRight, MapPinned, ShieldCheck } from "lucide-react";
+import SearchBar from "./SearchBar";
 
 export default function Hero() {
     return (
         <section className="relative overflow-hidden bg-gradient-to-b from-blue-50 via-white to-white">
             {/* Background Blur */}
-            <div className="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-blue-300/20 blur-3xl" />
+            <div className="animate-float absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-blue-300/20 blur-3xl" />
 
             <div className="relative mx-auto flex max-w-7xl flex-col items-center px-6 pb-12 pt-24 text-center">
 
@@ -38,61 +37,21 @@ export default function Hero() {
                 {/* Buttons */}
                 <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
 
-                    <button className="flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white shadow-lg transition hover:-translate-y-1 hover:bg-blue-700">
+                    <a href="#live-map" className="animate-pulse-ring flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white shadow-lg transition duration-200 hover:-translate-y-1 hover:bg-blue-700">
                         <MapPinned size={20} />
                         View Live Map
-                    </button>
+                    </a>
 
-                    <button className="flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-700 transition hover:border-blue-500 hover:text-blue-600">
+                    <a href="/about" className="flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-700 transition duration-200 hover:-translate-y-1 hover:border-blue-500 hover:text-blue-600">
                         Learn More
                         <ArrowRight size={18} />
-                    </button>
+                    </a>
 
                 </div>
 
                 {/* Search */}
-                <div className="mt-14 w-full max-w-5xl rounded-3xl border bg-white p-5 shadow-xl">
-
-                    <div className="grid gap-4 md:grid-cols-4">
-
-                        {/* Search */}
-
-                        <div className="relative md:col-span-2">
-                            <Search
-                                size={20}
-                                className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                            />
-
-                            <input
-                                type="text"
-                                placeholder="Search city, state, district..."
-                                className="h-14 w-full rounded-xl border border-slate-200 pl-12 pr-4 outline-none transition focus:border-blue-500"
-                            />
-                        </div>
-
-                        {/* Date */}
-
-                        <input
-                            type="date"
-                            className="h-14 rounded-xl border border-slate-200 px-4 outline-none transition focus:border-blue-500"
-                        />
-
-                        {/* Category */}
-
-                        <select className="h-14 rounded-xl border border-slate-200 px-4 outline-none transition focus:border-blue-500">
-                            <option>All Categories</option>
-                            <option>Farmers</option>
-                            <option>Students</option>
-                            <option>Workers</option>
-                            <option>Political</option>
-                        </select>
-
-                    </div>
-
-                    <button className="mt-5 h-14 w-full rounded-xl bg-blue-600 text-lg font-semibold text-white transition hover:bg-blue-700">
-                        Search Protest
-                    </button>
-
+                <div className="mt-14 w-full max-w-6xl">
+                    <SearchBar />
                 </div>
 
             </div>
